@@ -1,0 +1,92 @@
+eZ Engage
+=======================================
+
+== Main Content Template ==
+{include uri='design:engage/set_pagedata.tpl'}
+
+
+== Pagelayout.tpl ==
+Header
+{include uri='design:engage/meta.tpl' module_result=$module_result}
+
+
+Footer
+<div class="engage-suggestion hide"></div>
+
+{literal}
+<script id="ezengage_test_html" type="text/x-handlebars-template">
+    test
+    {{#each items}}
+    <div class="item" data-content-id="{{id}}">
+        <a href="{{link}}">
+            <div class="play-preview">
+                <img src="{{img}}" alt="{{title}}" class="img-responsive">
+            </div>
+        </a>
+        <p class="kicker"{{ byline }}</p>
+        <h2><a href="{{link}}">{{title}}</a></h2>
+        <p>{{ summary }}</p>
+    </div>
+    {{/each}}
+</script>
+<script id="ezengage_notification_html" type="text/x-handlebars-template">
+    {{#each items}}
+    <div class="item">
+        <a href="{{link}}">
+            <div class="play-preview">
+                <img src="{{img}}" alt="{{title}}" class="img-responsive">
+            </div>
+        </a>
+        <a href="{{link}}">{{title}}</a>
+    </div>
+    {{/each}}
+</script>
+{/literal}
+
+== Engage List Item Sample - Line view ==
+<div class="content-view-line engage-list-item">
+    <article data-engage-key="id" 
+             data-engage-type="value" 
+             data-engage-value="{$node.contentobject_id}">
+
+        {if $node.data_map.image.has_content}
+            <div class="attribute-image"
+                 data-engage-key="img" 
+                 data-engage-type="image">
+                {attribute_view_gui image_class=articlethumbnail href=$node.url_alias|ezurl attribute=$node.data_map.image}
+            </div>
+        {/if}
+
+        <h2
+            data-engage-key="link" 
+            data-engage-type="link">
+            <a href="{$node.url_alias|ezurl( 'no' )}" class="teaser-link"
+                data-engage-key="title" 
+                data-engage-type="text">{$node.data_map.title.content|wash()}</a>
+        </h2>
+
+        <div class="attribute-byline"
+                    data-engage-key="byline" 
+                    data-engage-type="text">
+            <span class="date">
+                {$node.object.published|l10n(shortdatetime)}
+            </span>
+            {if $node.data_map.author.content.is_empty|not()}
+                <span class="author">
+                    {attribute_view_gui attribute=$node.data_map.author}
+                </span>
+            {/if}
+        </div>
+
+        {if $node.data_map.intro.content.is_empty|not}
+        <div class="attribute-short"
+                    data-engage-key="summary" 
+                    data-engage-type="text">
+            {attribute_view_gui attribute=$node.data_map.intro}
+        </div>
+        {/if}
+
+    </article>
+</div>
+
+

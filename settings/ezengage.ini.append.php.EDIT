@@ -1,0 +1,18 @@
+<?php /* #?ini charset="utf-8"?
+
+#NOTE: Edit and rename to ezengage.ini.append.php
+
+[SocialInsights]
+DisqusKey=edit
+DisqusForum=edit
+
+YoutubeKey=edit
+YoutubeChannel=edit
+
+TwitterKey=edit
+TwitterSecret=edit
+TwitterTokenKey=edit
+TwitterTokenSecret=edit
+TwitterQuery=edit
+
+*/ ?>

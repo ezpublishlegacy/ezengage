@@ -1,0 +1,1 @@
+{ezpagedata_set( 'engage_data', hash( 'contentId', $node.contentobject_id, 'classIdentifier', $node.object.class_identifier, 'ownerId', $node.object.owner_id, 'tags', $node.data_map.tags.content.tag_ids|implode(',') ) )}
