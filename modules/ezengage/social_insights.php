@@ -84,7 +84,7 @@ $socialInsights += array( 'Twitter' => array(
                                 , 'neu' => array()
                                 , 'pos' => array() ) );
 
-$connection = new Abraham\TwitterOAuth\TwitterOAuth($consumer_key, $consumer_secret, $token, $secret);  
+$connection = new Abraham\TwitterOAuth\TwitterOAuth($consumer_key, $consumer_secret, $token, $secret);
 $twitterComments = $connection->get('/search/tweets', array( 'q' => $ini->variable('SocialInsights', 'TwitterQuery'), 'lang' => 'en' ) );
 $twitterComments = json_decode(json_encode($twitterComments), true);
 foreach($twitterComments['statuses'] as $twitterComment)

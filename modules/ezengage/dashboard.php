@@ -12,6 +12,18 @@ if( !$youtubeTokenData || !isset( $youtubeTokenData['access_token'] ) )
     $tpl->setVariable( "youtube_redirect", eZSys::serverURL() . '/ezengage/youtube_query' );
 }
 
+$disqusKey = $ini->variable('SocialInsights', 'DisqusKey');
+if( !$disqusKey || $disqusKey == 'edit' )
+{
+    $tpl->setVariable( "setup_disqus", true );
+}
+
+$twitterKey = $ini->variable('SocialInsights', 'TwitterKey');
+if( !$twitterKey || $twitterKey == 'edit' )
+{
+    $tpl->setVariable( "setup_twitter", true );
+}
+
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:engage/dashboard.tpl" );
 $Result['left_menu'] = "design:engage/leftmenu.tpl";
