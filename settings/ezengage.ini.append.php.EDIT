@@ -6,7 +6,8 @@
 DisqusKey=edit
 DisqusForum=edit
 
-YoutubeKey=edit
+YoutubeClientId=edit
+YoutubeClientSecret=edit
 YoutubeChannel=edit
 
 TwitterKey=edit

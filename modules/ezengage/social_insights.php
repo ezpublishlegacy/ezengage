@@ -38,13 +38,11 @@ $socialInsights += array( 'Youtube' => array(
                                 'neg' => array()
                                 , 'neu' => array()
                                 , 'pos' => array() ) );
-$url = 'https://content.googleapis.com/youtube/v3/commentThreads';
 $params = array();
-$params['key'] = $ini->variable('SocialInsights', 'YoutubeKey');
 $params['allThreadsRelatedToChannelId'] = $ini->variable('SocialInsights', 'YoutubeChannel');
 $params['part'] = 'id,snippet,replies';
-
-$youtubeComments = json_decode( EngageHelper::getData( $url, $params ), true );
+ $youtubeQuery = YoutubeQuery::instance();
+$youtubeComments = $youtubeQuery->query('commentThreads', 'list', $params );
 
 foreach( $youtubeComments['items'] as $youtubeComment )
 {

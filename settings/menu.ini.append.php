@@ -11,7 +11,7 @@ NavigationPartIdentifier=ezengagenavigationpart
 Name=eZEngage
 Tooltip=eZEngage
 URL[]
-URL[default]=ezengage/social_insights
+URL[default]=ezengage/dashboard
 Enabled[]
 Enabled[default]=true
 Enabled[browse]=false
@@ -22,6 +22,6 @@ Shown[edit]=true
 Shown[navigation]=true
 Shown[browse]=true
 
-PolicyList[]=ezengage/social_insights
+PolicyList[]=ezengage/dashboard
 
 */ ?>

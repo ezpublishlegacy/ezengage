@@ -24,7 +24,14 @@ $ViewList[ 'youtube_query' ] = array(
     , 'script'    => 'youtube_query.php'
 );
 
+$ViewList[ 'dashboard' ] = array(
+    'functions' => array( 'dashboard' )
+    , 'default_navigation_part' => 'ezengagenavigationpart'
+    , 'script'    => 'dashboard.php'
+);
+
 $FunctionList = array();
 $FunctionList[ 'social_insights' ] = array();
 $FunctionList[ 'social_media_query' ] = array();
+$FunctionList[ 'dashboard' ] = array();
 ?>

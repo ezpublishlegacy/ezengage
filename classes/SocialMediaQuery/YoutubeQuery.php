@@ -2,7 +2,9 @@
 
 class YoutubeQuery
 {
-    private $key;
+    private $tokenData = null;
+    private $ini;
+    private $http;
     private static $instance = null;
     /**
      * Call this method to get singleton
@@ -28,8 +30,85 @@ class YoutubeQuery
      */
     private function __construct()
     {
-        $ini = eZINI::instance('ezengage.ini');
-        $this->key = $ini->variable('SocialInsights', 'YoutubeKey');
+        $this->ini = eZINI::instance('ezengage.ini');
+        $this->http = eZHTTPTool::instance();
+        $this->setUpTokens();
+    }
+    /**
+     * 
+     * @return type
+     */
+    public function setUpTokens()
+    {
+        
+        if( !$this->tokenData )
+        {
+            $this->tokenData = json_decode( @file_get_contents( eZSys::storageDirectory() . eZSys::instance()->FileSeparator . 'youtube_tokens' ), true );
+            if( $this->tokenData && isset( $this->tokenData['access_token'] ) )
+            {
+                $url = 'https://www.googleapis.com/oauth2/v1/tokeninfo';
+                $params = [
+                    'access_token' => $this->tokenData['access_token'],
+                ];
+                $result = json_decode( EngageHelper::postData( $url, $params ), true );
+                if( $result && !isset( $result['error'] ) )
+                {
+                    $this->tokenData ['expires_in'] = $result['expires_in'];
+                }
+                else
+                {
+                    $this->tokenData = null;
+                }
+            }
+        }
+        if( !$this->tokenData  || $this->tokenData ['expires_in'] < time() + 60 )
+        {
+            if( !isset( $this->tokenData['refresh_token'] ) )
+            {
+                
+                $redirectURI = eZSys::serverURL() . '/ezengage/youtube_query';
+                if( !$this->http->hasVariable( 'code' ) )
+                {
+                    $clientId = $this->ini->variable('SocialInsights', 'YoutubeClientId');
+                    $url = "https://accounts.google.com/o/oauth2/auth";
+                    $scope = 'https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtubepartner';
+                    eZHTTPTool::redirect( "{$url}?client_id={$clientId}&redirect_uri={$redirectURI}&scope={$scope}&response_type=code&access_type=offline" );
+                    eZExecution::cleanExit();
+                }
+                else
+                {
+                    $url = "https://www.googleapis.com/oauth2/v4/token";
+                    $params = [
+                        'code' => $this->http->variable( 'code' ),
+                        'client_id' => $this->ini->variable('SocialInsights', 'YoutubeClientId'),
+                        'client_secret' => $this->ini->variable('SocialInsights', 'YoutubeClientSecret'),
+                        'redirect_uri' => $redirectURI,
+                        'grant_type' => 'authorization_code'
+                    ];
+                    $result = json_decode( EngageHelper::postData( $url, $params ), true );
+                    if( isset( $result['access_token'] ) )
+                    {
+                        $result['expires_in'] = intval( $result['expires_in'] ) + time();
+                        file_put_contents( eZSys::storageDirectory() . eZSys::instance()->FileSeparator . 'youtube_tokens',  json_encode( $result ) );
+                        $this->tokenData = $result;
+                    }
+                }
+            }
+            else
+            {
+                $url = 'https://www.googleapis.com/oauth2/v4/token';
+                $params = [
+                    'refresh_token' => $this->tokenData['refresh_token'],
+                    'client_id' => $this->ini->variable('SocialInsights', 'YoutubeClientId'),
+                    'client_secret' => $this->ini->variable('SocialInsights', 'YoutubeClientSecret'),
+                    'grant_type' => 'refresh_token'
+                ];
+                $result = json_decode( EngageHelper::postData( $url, $params ), true );
+                $this->tokenData['access_token'] = $result['access_token'];
+                $this->tokenData['expires_in'] = intval( $result['expires_in'] ) + time();
+                file_put_contents( eZSys::storageDirectory() . eZSys::instance()->FileSeparator . 'youtube_tokens',  json_encode( $this->tokenData ) );
+            }
+        }
     }
 
     /**
@@ -42,10 +121,11 @@ class YoutubeQuery
      */
     public function query( $resourceType, $method, $params )
     {
+        $this->setUpTokens();
         $definition = self::definition();
         if( isset( $definition[$resourceType] ) && isset( $definition[$resourceType]['methods'][$method] ) )
         {
-            $params += [ 'key' => $this->key ];
+            $params += [ 'access_token' => $this->tokenData['access_token'] ];
             foreach( $definition[$resourceType]['methods'][$method]['fields'] as $fieldKey => $fieldValue )
             {
                 if( !isset( $params[$fieldKey] ) && $fieldValue['default'] !== false )
