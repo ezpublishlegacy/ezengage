@@ -6,5 +6,10 @@
         <div><a href={"/ezengage/social_insights"|ezurl}>Social Insights</a></div>
     </li>
     {/if}
+    {if fetch( 'user', 'has_access_to', hash( 'module', 'ezengage', 'function', 'social_media_query' ) )}
+    <li>
+        <div><a href={"/ezengage/youtube_query"|ezurl}>Youtube Query</a></div>
+    </li>
+    {/if}
 </ul>
 

@@ -4,11 +4,19 @@ class EngageHelper
 
     public static function postData($url, $postParams = array() ) {
         $params = '';
-        foreach($postParams as $key=>$value)
+        if( is_array( $postParams ) )
         {
-            $params .= $key.'='. urlencode( $value ) . '&';
+            foreach($postParams as $key=>$value)
+            {
+                $params .= $key.'='. urlencode( $value ) . '&';
+            }
+            $params = trim($params, '&');
         }
-        $params = trim($params, '&');
+        else
+        {
+            $params = $postParams;
+        }
+        
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $url );

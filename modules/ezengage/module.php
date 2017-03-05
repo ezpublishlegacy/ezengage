@@ -18,6 +18,13 @@ $ViewList[ 'social_insights' ] = array(
     , 'script'    => 'social_insights.php'
 );
 
+$ViewList[ 'youtube_query' ] = array(
+    'functions' => array( 'social_media_query' )
+    , 'default_navigation_part' => 'ezengagenavigationpart'
+    , 'script'    => 'youtube_query.php'
+);
+
 $FunctionList = array();
 $FunctionList[ 'social_insights' ] = array();
+$FunctionList[ 'social_media_query' ] = array();
 ?>
