@@ -53,9 +53,13 @@ class YoutubeQuery
                 $result = json_decode( EngageHelper::postData( $url, $params ), true );
                 if( $result && !isset( $result['error'] ) )
                 {
-                    $this->tokenData ['expires_in'] = $result['expires_in'];
+                    $this->tokenData ['expires_in'] = time() + $result['expires_in'];
                 }
-                else
+                else if( isset( $result['error'] ) && isset( $this->tokenData['refresh_token'] ) )
+                {
+                    $this->tokenData ['expires_in'] = 0;
+                }
+                else if( !isset( $this->tokenData['refresh_token'] ) )
                 {
                     $this->tokenData = null;
                 }
@@ -104,9 +108,17 @@ class YoutubeQuery
                     'grant_type' => 'refresh_token'
                 ];
                 $result = json_decode( EngageHelper::postData( $url, $params ), true );
-                $this->tokenData['access_token'] = $result['access_token'];
-                $this->tokenData['expires_in'] = intval( $result['expires_in'] ) + time();
-                file_put_contents( eZSys::storageDirectory() . eZSys::instance()->FileSeparator . 'youtube_tokens',  json_encode( $this->tokenData ) );
+                if( isset( $result['access_token'] ) && isset( $result['expires_in'] ) )
+                {
+                    $this->tokenData['access_token'] = $result['access_token'];
+                    $this->tokenData['expires_in'] = intval( $result['expires_in'] ) + time();
+                    file_put_contents( eZSys::storageDirectory() . eZSys::instance()->FileSeparator . 'youtube_tokens',  json_encode( $this->tokenData ) );
+                }
+                else
+                {
+                    unlink( eZSys::storageDirectory() . eZSys::instance()->FileSeparator . 'youtube_tokens' );
+                }
+                
             }
         }
     }
