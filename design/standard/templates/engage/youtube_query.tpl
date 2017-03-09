@@ -1,19 +1,28 @@
 
 <form method="get" action="{'/ezengage/youtube_query'|ezurl('no')}">
-    <input type="submit" name="run_test" value="Run test" />
+    <div class="block">
+        <input type="submit" name="run_test" value="Run test" />
+    </div>
 </form>
-    
-<form method="get" action="{'/ezengage/youtube_query'|ezurl('no')}">
-    <label for="get_channel_keywords_id">Channel ID</label>
-    <input type="text" name="get_channel_keywords_id" />
-    <input type="submit" name="get_channel_keywords" value="Get Channel Keywords" />
-</form>
-    
-<form method="get" action="{'/ezengage/youtube_query'|ezurl('no')}">
-    <label for="get_video_tags_id">Video ID</label>
-    <input type="text" name="get_video_tags_id" />
-    <input type="submit" name="get_video_tags" value="Get Video Tags" />
-</form>
+<div class="block">
+    <fieldset>
+        <legend>SEO Tools</legend>
+        <form method="get" action="{'/ezengage/youtube_query'|ezurl('no')}">
+            <div class="block">
+                <label for="get_channel_keywords_id">Channel ID</label>
+                <input type="text" name="get_channel_keywords_id" />
+                <input type="submit" name="get_channel_keywords" value="Get Channel Keywords" />
+            </div>
+        </form>
+        <form method="get" action="{'/ezengage/youtube_query'|ezurl('no')}">
+            <div class="block">
+                <label for="get_video_tags_id">Video ID</label>
+                <input type="text" name="get_video_tags_id" />
+                <input type="submit" name="get_video_tags" value="Get Video Tags" />
+            </div>
+        </form>
+    </fieldset>
+</div>
 
 {if is_set($run_test)}
     <h2>Run test results</h2>
