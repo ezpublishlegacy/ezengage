@@ -24,6 +24,12 @@ if( !$twitterKey || $twitterKey == 'edit' )
     $tpl->setVariable( "setup_twitter", true );
 }
 
+$cseKey = $ini->variable('SocialInsights', 'GoogleCSECX');
+if( !$cseKey || $cseKey == 'edit' )
+{
+    $tpl->setVariable( "setup_cse", true );
+}
+
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:engage/dashboard.tpl" );
 $Result['left_menu'] = "design:engage/leftmenu.tpl";

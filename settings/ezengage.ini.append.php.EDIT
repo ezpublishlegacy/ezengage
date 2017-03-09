@@ -16,4 +16,8 @@ TwitterTokenKey=edit
 TwitterTokenSecret=edit
 TwitterQuery=edit
 
+GoogleWebKey=edit
+
+GoogleCSECX=edit
+
 */ ?>

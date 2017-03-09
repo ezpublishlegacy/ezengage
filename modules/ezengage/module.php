@@ -30,8 +30,15 @@ $ViewList[ 'dashboard' ] = array(
     , 'script'    => 'dashboard.php'
 );
 
+$ViewList[ 'google_cse_seo' ] = array(
+    'functions' => array( 'google_cse_seo' )
+    , 'default_navigation_part' => 'ezengagenavigationpart'
+    , 'script'    => 'google_cse_seo.php'
+);
+
 $FunctionList = array();
 $FunctionList[ 'social_insights' ] = array();
 $FunctionList[ 'social_media_query' ] = array();
 $FunctionList[ 'dashboard' ] = array();
+$FunctionList[ 'google_cse_seo' ] = array();
 ?>

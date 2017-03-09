@@ -34,3 +34,17 @@
         <li>Copy the app keys ( Consumer Key (API Key), Consumer Secret (API Secret), Access Token,  Access Token Secret ) to the ezengage.ini.append.php file ( TwitterKey, TwitterSecret, TwitterTokenKey, TwitterTokenSecret ).</li>
     </ul>
 {/if}
+
+{if is_set( $setup_cse )}
+    <h2>Set up your Google Custom Search Engine data access</h2>
+    <p>You must set up your Google Custom Search Engine data access</p>
+    <ul>
+        <li>Go to <a href="https://cse.google.com/">https://cse.google.com/</a></li>
+        <li>Create new project, specify any site domain you will delete later, go to Setup - Sites to search</li>
+        <li>Delete the existing site, set the select box to "Search the entire web but emphasize included sites"</li>
+        <li>Copy the cx parameter in the URL, that is the engine_id</li>
+        <li>Go to https://console.developers.google.com/apis/credentials create or just use an existing API key</li>
+        <li>Copy the GoogleWebKey, engine_id to the ezengage.ini.append.php file ( GoogleWebKey, GoogleCSECX ).</li>
+        <li>Now you should be able to use the Google CSE SEO tool</li>
+    </ul>
+{/if}

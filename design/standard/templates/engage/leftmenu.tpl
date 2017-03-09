@@ -16,5 +16,10 @@
         <div><a href={"/ezengage/youtube_query"|ezurl}>Youtube Query</a></div>
     </li>
     {/if}
+    {if fetch( 'user', 'has_access_to', hash( 'module', 'ezengage', 'function', 'google_cse_seo' ) )}
+    <li>
+        <div><a href={"/ezengage/google_cse_seo"|ezurl}>Google CSE SEO</a></div>
+    </li>
+    {/if}
 </ul>
 
