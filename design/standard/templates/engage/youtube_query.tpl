@@ -10,15 +10,39 @@
         <form method="get" action="{'/ezengage/youtube_query'|ezurl('no')}">
             <div class="block">
                 <label for="get_channel_keywords_id">Channel ID</label>
-                <input type="text" name="get_channel_keywords_id" />
+                <input type="text" name="get_channel_keywords_id" id="get_channel_keywords_id" />
                 <input type="submit" name="get_channel_keywords" value="Get Channel Keywords" />
             </div>
         </form>
         <form method="get" action="{'/ezengage/youtube_query'|ezurl('no')}">
             <div class="block">
                 <label for="get_video_tags_id">Video ID</label>
-                <input type="text" name="get_video_tags_id" />
+                <input type="text" name="get_video_tags_id" id="get_video_tags_id" />
                 <input type="submit" name="get_video_tags" value="Get Video Tags" />
+            </div>
+        </form>
+    </fieldset>
+    <fieldset>
+        <legend>Check Subscriber</legend>
+        <form method="get" action="{'/ezengage/youtube_query'|ezurl('no')}">
+            <div class="block">
+                <label for="subscriber_check_from_id">Is the Channel ID</label>
+                <input type="text" name="subscriber_check_from_id" id="subscriber_check_from_id" />
+            </div>
+            <div class="block">
+                <label for="subscriber_check_target_id">Subscribed to Channel ID?</label>
+                <input type="text" name="subscriber_check_target_id" id="subscriber_check_target_id" />
+            </div>
+            <input type="submit" name="check_subscriber" value="Check Subscriber" />
+        </form>
+    </fieldset>
+    <fieldset>
+        <legend>Get Channel ID</legend>
+        <form method="get" action="{'/ezengage/youtube_query'|ezurl('no')}">
+            <div class="block">
+                <label for="get_channel_id">Channel Custom Name</label>
+                <input type="text" name="get_channel_id" id="get_channel_id" />
+                <input type="submit" value="Get Channel ID" />
             </div>
         </form>
     </fieldset>
@@ -56,6 +80,19 @@
             <h3>No Keywords</h3>
         {/if}
     {/if}
+{/if}
+
+{if is_set( $get_channel_id_result )}
+    <h2>Get Channel Keywords Results</h2>
+    {if not( $get_channel_id_result )}
+        <h3>Error</h3>
+    {else}
+        <p>Channel ID: {$get_channel_id_result.id}</p>
+    {/if}
+{/if}
+
+{if is_set( $check_subscriber_result )}
+    <p>Channel {$check_subscriber_result.from_channel} <b>is{if $check_subscriber_result.subscribed|not()} NOT{/if}</b> subscribed to Channel {$check_subscriber_result.to_channel}</p>
 {/if}
 
 {if is_set( $get_video_tags_result )}

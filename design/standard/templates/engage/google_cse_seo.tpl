@@ -4,7 +4,7 @@
         <form method="get" action="{'/ezengage/google_cse_seo'|ezurl('no')}">
             <div class="block">
                 <label for="get_site_meta_overview">Query</label>
-                <input type="text" name="get_site_meta_overview" />
+                <input type="text" name="get_site_meta_overview" id="get_site_meta_overview" />
                 <input type="submit" value="Get Sites Results Meta Overview" />
             </div>
         </form>
