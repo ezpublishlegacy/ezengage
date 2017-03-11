@@ -4,12 +4,12 @@
 DesignExtensions[]=ezengage
 
 [JavaScriptSettings]
-FrontendJavaScriptList[]=jquery-1.12.1.min.js
-FrontendJavaScriptList[]=json3.min.js
-FrontendJavaScriptList[]=handlebars.min-latest.js
-FrontendJavaScriptList[]=ezengage.js
+FrontendJavaScriptList[]=frontend/jquery-1.12.1.min.js
+FrontendJavaScriptList[]=frontend/json3.min.js
+FrontendJavaScriptList[]=frontend/handlebars.min-latest.js
+FrontendJavaScriptList[]=frontend/ezengage.js
 
 [StylesheetSettings]
-FrontendCSSFileList[]=ezengage.css
+FrontendCSSFileList[]=frontend/ezengage.min.css
 
 */ ?>

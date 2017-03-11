@@ -1,1 +1,3 @@
 settings/ezengage.ini.append.php
+node_modules/
+test/
