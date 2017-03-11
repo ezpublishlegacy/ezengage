@@ -21,5 +21,10 @@
         <div><a href={"/ezengage/google_cse_seo"|ezurl}>Google CSE SEO</a></div>
     </li>
     {/if}
+    {if fetch( 'user', 'has_access_to', hash( 'module', 'ezengage', 'function', 'dashboard' ) )}
+    <li>
+        <div><a href={"/ezengage/chart_js_test"|ezurl}>ChartJS sample</a></div>
+    </li>
+    {/if}
 </ul>
 

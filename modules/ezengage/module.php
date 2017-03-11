@@ -30,6 +30,12 @@ $ViewList[ 'dashboard' ] = array(
     , 'script'    => 'dashboard.php'
 );
 
+$ViewList[ 'chart_js_test' ] = array(
+    'functions' => array( 'dashboard' )
+    , 'default_navigation_part' => 'ezengagenavigationpart'
+    , 'script'    => 'chart_js_test.php'
+);
+
 $ViewList[ 'google_cse_seo' ] = array(
     'functions' => array( 'google_cse_seo' )
     , 'default_navigation_part' => 'ezengagenavigationpart'
