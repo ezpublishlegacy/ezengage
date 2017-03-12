@@ -371,6 +371,11 @@ function injectItemsRightMenu()
     var data = [];
     for( var x in bufferedItems )
     {
+        if(data.length == 5)
+        {
+            break;
+        }
+
         var found = false;
         for( var y in $excludeItems )
         {
