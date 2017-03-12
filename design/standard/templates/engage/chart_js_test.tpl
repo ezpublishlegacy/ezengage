@@ -7,11 +7,13 @@
      $past_month = 0
      $past_year = 0
      $date_timestamps = array()
-     $end_date = 0}
+     $end_date = 0
+     $count = 0
+     $total = 0}
     <script>
         var chart_data = [];
         var chart_labels = [];
-{for 11 to 0 as $past_months}
+{for 12 to 0 as $past_months}
     {set $past_month = sub( $current_month, $past_months )
          $past_year = $current_year}
     
@@ -19,25 +21,29 @@
         {set $past_month = sum(12,$past_month)}
         {set $past_year = sub($past_year,1)}
     {/if}
-    {set $date_timestamps = $date_timestamps|append( maketime( 0, 0, 0,$past_month, 1, $past_year ) )}
+    {set $date_timestamps = $date_timestamps|append( maketime( 0, 0, 0, $past_month, 1, $past_year ) )}
 {/for}
 {foreach $date_timestamps as $index => $date_timestamp}
-            {if $index|lt(11)}
+            {if $index|lt(12)}
                 {set $end_date = $date_timestamps[$index|inc]|dec}
             {else}
                 {set $end_date = currentdate()}
             {/if}
             /* {$date_timestamp|datetime( 'custom', '%h:%i %a %d %F %Y' )} - {$end_date|datetime( 'custom', '%h:%i %a %d %F %Y' )} */
-            chart_data.push({fetch('content', 'tree_count',
+            {set $count = fetch('content', 'tree_count',
                                         hash( 
                                                 'parent_node_id', 2
+                                                , 'main_node_only', true()
                                                 , 'class_filter_type', 'include'
                                                 , 'class_filter_array', array( 'article' )
                                                 , 'attribute_filter', array( 'and', array( 'published', 'between', array( $date_timestamp, $end_date ) ) )
                                         )
-                         )});
+                         )
+                  $total = sum( $total, $count )}
+            chart_data.push({$count});
             chart_labels.push("{$date_timestamp|datetime( 'custom', '%F %Y' )}");
 {/foreach}
+
 {literal}
 
         window.chartColors = {
@@ -76,3 +82,5 @@
         
     </script>
 {/literal}
+
+<h3>Total: {$total}</h3>
